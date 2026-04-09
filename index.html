@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Antigravity Cursor Particle System</title>
-<link rel="icon" type="image/png" href="eye3.png">
+<link rel="icon" type="image/png" href="eye3.png"><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Indie+Flower&display=swap" rel="stylesheet">
 <script>
   (function() {
     var savedTheme = localStorage.getItem('theme');
@@ -68,7 +72,8 @@
 
   body {
     background-color: var(--bg);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     font-family: system-ui, -apple-system, sans-serif;
     color: var(--text);
     min-height: 100vh;
@@ -91,7 +96,7 @@
     pointer-events: none;
   }
 
-  main {
+  .content-wrapper {
     position: relative;
     z-index: 1;
     display: flex;
@@ -132,8 +137,8 @@
   }
 
   #cta-button {
-    margin-top: 24px;
-    padding: 0 32px;
+    margin-top: 1rem;
+    padding: 0 1.5em;
     min-height: 48px;
     border: 1.5px solid var(--c1);
     border-radius: 9999px;
@@ -150,7 +155,7 @@
   }
 
   #cta-button:hover {
-    background: linear-gradient(90deg, var(--c1), var(--c2));
+    background: linear-gradient(90deg, transparent, var(--c1), transparent);
     color: var(--btn-hover);
     border-color: transparent;
   }
@@ -174,6 +179,7 @@
     color: var(--glass-text);
     font-size: clamp(13px, 4vw, 14px);
     line-height: 1.5;
+    font-family:'Syne', sans-serif;  
   }
 
   #cursor-orb {
@@ -208,12 +214,12 @@
 
   @media (min-width: 768px) {
     .glass-card {
-      max-width: 400px;
+      max-width: 800px;
     }
   }
 
   .footer {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     left: 0;
     width: 100%;
@@ -323,26 +329,157 @@
       display: none !important;
     }
   }
+
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 40px;
+    padding: 0 24px;
+  }
+
+  .cards-container:hover .memory-card:not(:hover) {
+    opacity: 0.3;
+    filter: blur(3px) grayscale(40%);
+    transform: scale(0.95);
+  }
+
+  .memory-card {
+    text-align: center;
+    position: relative;
+    min-height: 140px;
+    z-index: 1;
+    text-decoration: none;
+    perspective: 1000px;
+    cursor: none;
+    opacity: 0;
+    transform: translateY(40px) rotateX(-15deg) scale(0.95);
+  }
+
+  .memory-card.is-visible {
+    animation: flyInSpin 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  @keyframes flyInSpin {
+    0% { opacity: 0; transform: translateY(40px) rotateX(-15deg) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) rotateX(0) scale(1); }
+  }
+
+  .memory-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 140px;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-style: preserve-3d;
+  }
+
+  .cards-container:hover .memory-card:not(:hover) .memory-card-inner {
+    transform: scale(0.95);
+  }
+
+  .memory-card:hover .memory-card-inner {
+    transform: rotateY(180deg) scale(1.05);
+  }
+
+  .memory-card:hover {
+    z-index: 10;
+  }
+
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    overflow: hidden;
+  }
+
+  .card-front {
+    background: rgba(10, 10, 20, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--c7);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  }
+
+  .card-front::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top right, rgba(123, 97, 255, 0.2), transparent);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .card-back {
+    background: var(--bg);
+    border: 1px solid var(--c1);
+    transform: rotateY(180deg);
+    box-shadow: 0 0 25px rgba(191, 95, 255, 0.5), inset 0 0 15px rgba(191, 95, 255, 0.2);
+  }
+
+  .card-back p {
+    font-size: 15px;
+    line-height: 1.2;
+    /*font-family: 'Syne', sans-serif;*/    
+    font-family: 'Indie Flower', cursive;
+    color: var(--text);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin: 0; 
+    letter-spacing: .2em;
+  }
+
+  .mystic-icon {
+    position: relative;
+    z-index: 2;
+    font-size: 32px;
+    background: linear-gradient(135deg, var(--c1), var(--c3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 8px var(--c1));
+    animation: pulseMystic 2.5s infinite alternate ease-in-out;
+  }
+
+  @keyframes pulseMystic {
+    0% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 8px var(--c1)) brightness(1); }
+    100% { transform: scale(1.15) translateY(-4px); filter: drop-shadow(0 0 18px var(--c3)) brightness(1.4); }
+  }
 </style>
 </head>
 <body>
 
 <canvas id="particle-canvas"></canvas>
 
-<main>
-  <div class="hero">
+<div class="content-wrapper">
+  <header class="hero">
     <h1>Siente la magia</h1>
-    <h2>Mueve el cursor. Toque la pantalla.</h2>
-    <button id="cta-button">Obsérvate</button>
-  </div>
+    <h2>Es hora de cambiar el paisaje pero mantener la risa.</h2>
+  </header>
   
-  <div class="glass-card">
-    <p>Un roce tuyo basta para que lo inerte cobre vida</p>
-    <p>Susurros desde lo digital</p>
-    <p>Entre el ruido del código, doblo la luz y capturo sombras</p>
-    <p>Tu movimiento da forma a esta realidad</p>
-  </div>
-</main>
+  <aside class="glass-card">
+    <p>"Dicen que la materia no se crea ni se destruye, solo se transforma.</p>
+    <p>Nosotros somos la prueba:</p>
+    <p>transformamos los años en anécdotas, el barrio en leyenda y la distancia</p>
+    <p>en una excusa perfecta para volver a vernos.</p>
+    <p>De eso estamos hechos, y con eso vamos a conquistar el camino.</p>
+    
+    <button id="cta-button">NOSOTROS</button>
+  </aside>
+
+  <main id="memories-section" class="cards-container">
+    <!-- Cards will be populated dynamically by JS -->
+  </main>
+</div>
 
 <footer class="footer">
   <div class="footer-company">Kikiriya DevOps</div>
@@ -542,11 +679,12 @@ function updateCursor(x, y, target) {
   const isBtnHover = target === btn || btn.contains(target);
   const isThemeHover = target.closest('#theme-toggle');
   const isWaHover = target.closest('.whatsapp-btn');
+  const isCardHover = target.closest('.memory-card');
 
-  if (isBtnHover || isThemeHover || isWaHover) {
+  if (isBtnHover || isThemeHover || isWaHover || isCardHover) {
     if (!isHover) {
       isHover = true;
-      btnRect = isBtnHover ? btn.getBoundingClientRect() : (isThemeHover ? target.closest('#theme-toggle').getBoundingClientRect() : target.closest('.whatsapp-btn').getBoundingClientRect());
+      btnRect = isBtnHover ? btn.getBoundingClientRect() : (isThemeHover ? target.closest('#theme-toggle').getBoundingClientRect() : (isWaHover ? target.closest('.whatsapp-btn').getBoundingClientRect() : target.closest('.memory-card').getBoundingClientRect()));
       orb.style.width = '22px';
       orb.style.height = '22px';
       ring.style.opacity = '0.9';
@@ -661,9 +799,62 @@ themeToggle.addEventListener('click', () => {
 });
 
 // 7. Init call
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('is-visible');
+      }, index * 100);
+      cardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+const memoriesData = [
+  { icon: '🌿', text: 'Estamos hechos de barro, asfalto y sueños de Capurro; esa mezcla es indestructible si estamos juntos.' },
+  { icon: '✦', text: 'Cada kilómetro recorrido será un tributo a los que somos, a los que fuimos y a los que siempre seremos.' },
+  { icon: '✧', text: 'Somos una constelación de amigos que solo brilla con toda su intensidad cuando se junta en un mismo cielo.' },
+  { icon: '☾', text: 'Capturaremos sombras del pasado para iluminarlas con las carcajadas del presente.' },
+  { icon: '🚲', text: 'Porque somos del barrio, somos del mundo y, sobre todo, somos los unos de los otros. ¡Vámonos!' },
+  { icon: '☯', text: 'Doblemos la luz de este viaje para que nos ilumine el resto del camino que nos queda por andar.' },
+  { icon: '✨', text: 'Que este viaje sea el \'reset\' que nuestras almas necesitan para seguir brillando con fuerza.' },
+  { icon: '✶', text: 'Vamos a reírnos hasta que el cuerpo recuerde que la alegría es el mejor tónico para los años.' },
+  { icon: '☄', text: 'Carguemos las valijas de anécdotas y descarguemos el peso de las rutinas.' },
+  { icon: '🪇', text: 'Hay una frecuencia mágica que solo suena cuando estamos todos' },
+  { icon: '⚝', text: 'No es solo un paseo, es un ritual de gratitud por haber caminado juntos tantas décadas.' },
+  { icon: '☼', text: 'En el fondo, seguimos siendo los mismos niños de siempre.' },
+  { icon: '☽', text: 'Crecimos bajo el mismo cielo de barrio.' },
+  { icon: '🥂', text: 'Donde estemos nosotros, siempre será el centro del universo. ¡A disfrutar!' },  
+  { icon: '✵', text: 'Nuestra historia está escrita en las calles de Capurro, pero el siguiente capítulo lo escribiremos frente al mar y bajo las estrellas.' },
+  { icon: '✷', text: 'Porque estamos grandes y el \'después\' es un espejismo: el momento de celebrar nuestra existencia es hoy.' },
+  { icon: '✥', text: 'Somos del Barrio Capurro y de eso estamos hechos' }
+];
+
+function renderMemories() {
+  const container = document.getElementById('memories-section');
+  if (!container) return;
+  memoriesData.forEach(memory => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    card.innerHTML = `
+      <div class="memory-card-inner">
+        <div class="card-front">
+          <div class="mystic-icon">${memory.icon}</div>
+        </div>
+        <div class="card-back">
+          <p>${memory.text}</p>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
 function init() {
   handleResize();
+  renderMemories();
   if (!isReduced) requestAnimationFrame(anim);
+  document.querySelectorAll('.memory-card').forEach(card => cardObserver.observe(card));
 }
 
 init();

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antigravity Cursor Particle System</title>
+<link rel="icon" type="image/png" href="eye3.png">
+<style>
+  :root {
+    --c1: #BF5FFF;
+    --c2: #FF6FC8;
+    --c3: #00F5C4;
+    --c4: #FFE03B;
+    --c5: #7B61FF;
+    --bg: #0D0D1A;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg);
+    overflow: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: white;
+    min-height: 100vh;
+    cursor: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a, button, input {
+    cursor: none;
+  }
+
+  #particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 24px 80px;
+    gap: 48px;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  h1 {
+    font-size: clamp(32px, 8vw, 48px);
+    font-weight: bold;
+    font-style: italic;
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 14px;
+    color: var(--c3);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+
+  #cta-button {
+    margin-top: 24px;
+    padding: 0 32px;
+    min-height: 48px;
+    border: 1.5px solid var(--c1);
+    border-radius: 9999px;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #cta-button:hover {
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    color: #000;
+    border-color: transparent;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 0.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .glass-card p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: clamp(13px, 4vw, 14px);
+    line-height: 1.5;
+  }
+
+  #cursor-orb {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background-color: var(--c3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    filter: blur(2px);
+    transition: width 0.3s ease, height 0.3s ease;
+    will-change: transform, width, height;
+  }
+
+  #cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--c1);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+    will-change: transform, opacity;
+  }
+
+  @media (min-width: 768px) {
+    .glass-card {
+      max-width: 400px;
+    }
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 16px 24px;
+    background: rgba(13, 13, 26, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+  }
+
+  .footer-company {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: linear-gradient(90deg, var(--c3), var(--c4));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .footer-phrase {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .whatsapp-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    z-index: 100;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .whatsapp-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
+  }
+
+  .whatsapp-btn svg {
+    width: 32px;
+    height: 32px;
+    fill: currentColor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    #cursor-orb, #cursor-ring {
+      display: none !important;
+    }
+    body, a, button, input {
+      cursor: auto;
+    }
+    #particle-canvas {
+      display: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<main>
+  <div class="hero">
+    <h1>Siente la magia</h1>
+    <h2>Mueve el cursor. Toque la pantalla.</h2>
+    <button id="cta-button">Obsérvate</button>
+  </div>
+  
+  <div class="glass-card">
+    <p>Un roce tuyo basta para que lo inerte cobre vida</p>
+    <p>Susurros desde lo digital</p>
+    <p>Entre el ruido del código, doblo la luz y capturo sombras</p>
+    <p>Tu movimiento da forma a esta realidad</p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-company">Kikiriya DevOps</div>
+  <div class="footer-phrase">Hecho con 💚 en Montevideo, Uruguay</div>
+</footer>
+
+<a href="https://wa.me/59894872605" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Chat on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-2.9-5-1.5-7.7 1.3-10.5 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.6 5.6-9.3 1.9-3.7.9-7-1.4-9.8-2.3-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+  </svg>
+</a>
+
+<div id="cursor-orb"></div>
+<div id="cursor-ring"></div>
+
+		
+<script>
+// 1. Config Object
+const CONFIG = {
+  colors: ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)'],
+  baseCount: 45,
+  desktopCount: 80,
+  desktopBreak: 768,
+  repelRadius: 120,
+  repelForce: 1.8,
+  attractRadius: 80,
+  attractForce: 0.6,
+  spring: 0.012,
+  damping: 0.88,
+  jitter: 0.03,
+  bounce: 0.7,
+  burstCount: 12,
+  burstDuration: 600,
+  ringLerp: 0.2
+};
+
+// Evaluate CSS vars to exact hex values for canvas performance
+const CSS_COLORS = ['#BF5FFF', '#FF6FC8', '#00F5C4', '#FFE03B'];
+
+// 2. Canvas setup + resize handler
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d', { alpha: true });
+let width, height;
+let particles = [];
+let bursts = [];
+let resizeTimer;
+
+function initParticles(targetCount) {
+  if (particles.length < targetCount) {
+    for (let i = particles.length; i < targetCount; i++) {
+       particles.push(new Particle());
+    }
+  } else if (particles.length > targetCount) {
+    particles.splice(targetCount);
+  }
+}
+
+function handleResize() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+  const targetCount = width >= CONFIG.desktopBreak ? CONFIG.desktopCount : CONFIG.baseCount;
+  initParticles(targetCount);
+}
+
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(handleResize, 150);
+});
+
+// 3. Particle class
+class Particle {
+  constructor(x, y) {
+    this.ox = x !== undefined ? x : Math.random() * window.innerWidth;
+    this.oy = y !== undefined ? y : Math.random() * window.innerHeight;
+    this.x = this.ox;
+    this.y = this.oy;
+    this.r = (Math.random() * 6 + 3) / 2; 
+    this.vx = (Math.random() - 0.5) * 0.8;
+    this.vy = (Math.random() - 0.5) * 0.8;
+    this.opacity = Math.random() * 0.35 + 0.55;
+    this.color = CSS_COLORS[Math.floor(Math.random() * CSS_COLORS.length)];
+  }
+
+  update(mx, my, isHover, rect) {
+    this.vx += (Math.random() - 0.5) * 2 * CONFIG.jitter;
+    this.vy += (Math.random() - 0.5) * 2 * CONFIG.jitter;
+    
+    let forceUsed = false;
+    
+    if (isHover && rect) {
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = cx - this.x;
+      const dy = cy - this.y;
+      const dist = Math.hypot(dx, dy);
+      
+      if (dist < CONFIG.attractRadius) {
+        const f = ((CONFIG.attractRadius - dist) / CONFIG.attractRadius) * CONFIG.attractForce;
+        this.vx += (dx / dist) * f;
+        this.vy += (dy / dist) * f;
+        forceUsed = true;
+      }
+    }
+    
+    if (!forceUsed && mx !== -100 && my !== -100) {
+      const dx = this.x - mx;
+      const dy = this.y - my;
+      const dist = Math.hypot(dx, dy);
+      
+      if (dist < CONFIG.repelRadius) {
+        const f = ((CONFIG.repelRadius - dist) / CONFIG.repelRadius) * CONFIG.repelForce;
+        this.vx += (dx / dist) * f;
+        this.vy += (dy / dist) * f;
+      }
+    }
+    
+    this.vx += (this.ox - this.x) * CONFIG.spring;
+    this.vy += (this.oy - this.y) * CONFIG.spring;
+    
+    this.vx *= CONFIG.damping;
+    this.vy *= CONFIG.damping;
+    
+    this.x += this.vx;
+    this.y += this.vy;
+    
+    if (this.x < 0) { this.x = 0; this.vx *= -CONFIG.bounce; }
+    else if (this.x > width) { this.x = width; this.vx *= -CONFIG.bounce; }
+    
+    if (this.y < 0) { this.y = 0; this.vy *= -CONFIG.bounce; }
+    else if (this.y > height) { this.y = height; this.vy *= -CONFIG.bounce; }
+  }
+
+  draw(c) {
+    c.beginPath();
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fillStyle = this.color;
+    c.globalAlpha = this.opacity;
+    c.shadowBlur = 10;
+    c.shadowColor = this.color;
+    c.fill();
+    c.globalAlpha = 1;
+    c.shadowBlur = 0;
+  }
+}
+
+class BurstParticle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.r = (Math.random() * 4 + 2) / 2;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 3 + 1;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.color = CSS_COLORS[Math.floor(Math.random() * CSS_COLORS.length)];
+    this.life = 1;
+    this.decay = 1 / (CONFIG.burstDuration / 16.6);
+  }
+  
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life -= this.decay;
+  }
+  
+  draw(c) {
+    c.beginPath();
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fillStyle = this.color;
+    c.globalAlpha = Math.max(0, this.life);
+    c.fill();
+    c.globalAlpha = 1;
+  }
+}
+
+// 4. Cursor tracking
+const orb = document.getElementById('cursor-orb');
+const ring = document.getElementById('cursor-ring');
+const btn = document.getElementById('cta-button');
+
+let mx = -100, my = -100;
+let rx = -100, ry = -100;
+let isHover = false;
+let btnRect = null;
+const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function updateCursor(x, y, target) {
+  if (isReduced) return;
+  mx = x;
+  my = y;
+  orb.style.transform = `translate3d(calc(${mx}px - 50%), calc(${my}px - 50%), 0)`;
+  
+  if (target === btn || btn.contains(target)) {
+    if (!isHover) {
+      isHover = true;
+      btnRect = btn.getBoundingClientRect();
+      orb.style.width = '22px';
+      orb.style.height = '22px';
+      ring.style.opacity = '0.9';
+    }
+  } else {
+    if (isHover) {
+      isHover = false;
+      orb.style.width = '12px';
+      orb.style.height = '12px';
+      ring.style.opacity = '0.4';
+    }
+  }
+}
+
+function handlePointer(e) {
+  if (isReduced) return;
+  if (e.touches && e.touches.length > 0) {
+    const target = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+    updateCursor(e.touches[0].clientX, e.touches[0].clientY, target);
+  } else if (!e.touches) {
+    updateCursor(e.clientX, e.clientY, e.target);
+  }
+}
+
+// 5. Render loop
+function anim() {
+  if (isReduced) return;
+  
+  ctx.clearRect(0, 0, width, height);
+  
+  if (mx !== -100 && my !== -100) {
+    if (rx === -100) { rx = mx; ry = my; }
+    rx += (mx - rx) * CONFIG.ringLerp;
+    ry += (my - ry) * CONFIG.ringLerp;
+    ring.style.transform = `translate3d(calc(${rx}px - 50%), calc(${ry}px - 50%), 0)`;
+  }
+  
+  for (let p of particles) {
+    p.update(mx, my, isHover, btnRect);
+    p.draw(ctx);
+  }
+  
+  for (let i = bursts.length - 1; i >= 0; i--) {
+    let b = bursts[i];
+    b.update();
+    b.draw(ctx);
+    if (b.life <= 0) bursts.splice(i, 1);
+  }
+  
+  requestAnimationFrame(anim);
+}
+
+// 6. Event listeners
+window.addEventListener('mousemove', handlePointer, { passive: true });
+window.addEventListener('touchmove', handlePointer, { passive: true });
+
+function triggerBurst(cx, cy) {
+  if (isReduced) return;
+  for (let i = 0; i < CONFIG.burstCount; i++) {
+    bursts.push(new BurstParticle(cx, cy));
+  }
+}
+
+window.addEventListener('click', (e) => {
+  triggerBurst(mx !== -100 ? mx : e.clientX, my !== -100 ? my : e.clientY);
+});
+
+// 7. Init call
+function init() {
+  handleResize();
+  if (!isReduced) requestAnimationFrame(anim);
+}
+
+init();
+</script>
+</body>
+</html>

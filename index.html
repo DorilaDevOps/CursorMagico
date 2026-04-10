@@ -31,7 +31,8 @@
   }
 
   [data-theme="light"] {
-    --bg: #F0F0F5;
+    --bg: #F0F0F5;    
+    --bg_card: #cacae899;
     --text: #1a1a2e;
     --btn-text: #1a1a2e;
     --btn-hover: #fff;
@@ -49,6 +50,7 @@
 
   [data-theme="dark"] {
     --bg: #0D0D1A;
+    --bg_card: #8a8ad199;
     --text: white;
     --btn-text: white;
     --btn-hover: #000;
@@ -342,7 +344,8 @@
 
   .cards-container:hover .memory-card:not(:hover) {
     opacity: 0.3;
-    filter: blur(3px) grayscale(40%);
+    /*filter: blur(3px) grayscale(40%);*/
+    filter: blur(1px) drop-shadow(1px 2px 3px pink);
     transform: scale(0.95);
   }
 
@@ -381,7 +384,7 @@
   }
 
   .memory-card:hover .memory-card-inner {
-    transform: rotateY(180deg) scale(1.05);
+    transform: rotateY(180deg) scale(1.2);
   }
 
   .memory-card:hover {
@@ -404,7 +407,8 @@
   }
 
   .card-front {
-    background: rgba(10, 10, 20, 0.6);
+    /*background: rgba(10, 10, 20, 0.6);*/
+        background: var(--bg_card);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--c7);

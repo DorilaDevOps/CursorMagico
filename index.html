@@ -2,11 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Antigravity Cursor Particle System</title>
-<link rel="icon" type="image/png" href="eye3.png"><link rel="preconnect" href="https://fonts.googleapis.com">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Yuyos & Co. — Productos de hierbas medicinales naturales seleccionadas a mano. Descubrí el poder de la naturaleza con nuestra línea premium de infusiones, tinturas y aceites esenciales." />
+  <meta name="keywords" content="yuyos medicinales, hierbas medicinales, plantas medicinales, infusiones naturales, tinturas herbales, aceites esenciales, remedios naturales, fitoterapia, medicina natural" />
+  <meta name="author" content="Yuyos & Co." />
+  <meta name="robots" content="index, follow" />
+	<title>Viaje Capurrense</title>
+	<link rel="icon" type="image/png" href="flickr.ico">
+	
+<!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Yuyos & Co. — Hierbas Medicinales Premium" />
+  <meta property="og:description" content="Descubrí el poder de la naturaleza. Productos herbales seleccionados con amor para tu bienestar." />
+  <meta property="og:locale" content="es_UY" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Yuyos & Co. — Hierbas Medicinales Premium" />
+  <meta name="twitter:description" content="Descubrí el poder de la naturaleza. Productos herbales seleccionados con amor para tu bienestar." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://yuyosandco.com/" />
+  
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Indie+Flower&display=swap" rel="stylesheet">
 <script>
@@ -47,6 +65,8 @@
     --h2-color: #00876c;
     --h1-shadow: rgba(0, 0, 0, 0.2);	
 	--text_whitesmoke:#4b2424;
+	--cgrisOscuro: #414141;
+	--cverdeClaro: yellowgreen;
 	
   }
 
@@ -67,6 +87,8 @@
     --h2-color: var(--c3);
     --h1-shadow: rgba(0, 0, 0, 0.5);	
 	--text_whitesmoke:#dcd9d9c2;
+	--cgrisOscuro: yellowgreen;
+	--cverdeClaro: #414141;
   }
 
   *, *::before, *::after {
@@ -109,8 +131,8 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 24px 24px 80px;
-    gap: 48px;
+    padding: 1rem 2rem 3rem;
+    gap: 2rem;
   }
 
   .hero {
@@ -118,12 +140,14 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 16px;
+    gap: 1rem;
   }
 
   h1 {
     font-size: clamp(32px, 8vw, 48px);
-    font-weight: bold;
+<!--Lo lógico en Clamp suele ser: clamp(mas chico, 8%ancho viewport, valor mas grande). si es al reves provoca que el navegador fuerce el valor máximo. --> 
+
+   font-weight: bold;
     font-style: italic;
     background: linear-gradient(90deg, var(--h1-grad-start), var(--h1-grad-end));
     -webkit-background-clip: text;
@@ -141,17 +165,18 @@
     font-weight: normal;
   }
 
-  #cta-button {
-    margin-top: 1rem;
+  #cta_btn_nosotros {
+    margin-top: 3rem;
     padding: 0 1.5em;
     min-height: 48px;
     border: 1.5px solid var(--c1);
     border-radius: 9999px;
     background: transparent;
-    color: var(--btn-text);
-    font-size: 16px;
+    color: var(--c3);
+    text-shadow: 1px 2px 2px var(--footer-phrase);
+    font-size: 1.1em;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.5em;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
     display: flex;
@@ -159,7 +184,7 @@
     justify-content: center;
   }
 
-  #cta-button:hover {
+  #cta_btn_nosotros:hover {
     background: linear-gradient(90deg, transparent, var(--c1), transparent);
     color: var(--btn-hover);
     border-color: transparent;
@@ -178,11 +203,12 @@
     gap: 8px;
     width: 100%;
     max-width: 320px;
+    height: fit-content;
   }
 
   .glass-card p {
-    color: var(--glass-text);
-    font-size: clamp(13px, 4vw, 14px);
+    color: var(--glass-text);    
+    font-size: clamp(.9em, 4vw, 1.2em);
     line-height: 1.5;
     font-family:'Syne', sans-serif;  
   }
@@ -217,12 +243,6 @@
     will-change: transform, opacity;
   }
 
-  @media (min-width: 768px) {
-    .glass-card {
-      max-width: 800px;
-    }
-  }
-
   .footer {
     /*position: fixed;*/
     bottom: 0;
@@ -242,13 +262,6 @@
     text-align: center;
   }
 
-  @media (max-width: 767px) {
-    .footer {
-      flex-direction: column;
-      gap: 8px;
-    }
-  }
-
   .footer-company, .footer-phrase {
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -260,7 +273,6 @@
   }
 
   .footer-phrase {
-    font-size: 14px;	
 	text-shadow: 1px 2px 2px var(--c8);
 	color: var(--text_whitesmoke);
   }
@@ -292,7 +304,6 @@
     right: 24px;
     width: 56px;
     height: 56px;
-    background-color: #25D366;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -301,7 +312,7 @@
     text-decoration: none;
     z-index: 100;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px  var(--glass-text);
   }
 
   .whatsapp-btn:hover {
@@ -312,38 +323,18 @@
   .whatsapp-btn svg {
     width: 32px;
     height: 32px;
-    /*fill: currentColor;*/
-    
-    fill: yellowgreen;
-    
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-    #cursor-orb, #cursor-ring {
-      display: none !important;
-    }
-    body, a, button, input {
-      cursor: auto;
-    }
-    #particle-canvas {
-      display: none !important;
-    }
+    /*fill: currentColor;*/    
+    fill: yellowgreen;    
   }
 
   .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: .6rem;
     width: 100%;
     max-width: 1200px;
     margin-top: 40px;
-    padding: 0 24px;
+    padding: 0 1rem;
   }
 
   .cards-container:hover .memory-card:not(:hover) {
@@ -359,7 +350,7 @@
     min-height: 140px;
     z-index: 1;
     text-decoration: none;
-    perspective: 1000px;
+    perspective: 1000px; 
     cursor: none;
     opacity: 0;
     transform: translateY(40px) rotateX(-15deg) scale(0.95);
@@ -381,6 +372,7 @@
     min-height: 140px;
     transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     transform-style: preserve-3d;
+	 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
 
   .cards-container:hover .memory-card:not(:hover) .memory-card-inner {
@@ -388,11 +380,12 @@
   }
 
   .memory-card:hover .memory-card-inner {
-    transform: rotateY(180deg) scale(1.2);
+    transform: rotateY(180deg) scale(1.5);
   }
 
   .memory-card:hover {
     z-index: 10;
+	height: 250px;
   }
 
   .card-front, .card-back {
@@ -406,13 +399,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 32px 24px;
+    padding: 4px;
     overflow: hidden;
   }
 
   .card-front {
-    /*background: rgba(10, 10, 20, 0.6);*/
-        background: var(--bg_card);
+    background: var(--bg_card);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--c7);
@@ -433,17 +425,20 @@
     border: 1px solid var(--c1);
     transform: rotateY(180deg);
     box-shadow: 0 0 25px rgba(191, 95, 255, 0.5), inset 0 0 15px rgba(191, 95, 255, 0.2);
+	font-size: clamp(.7rem, 2.5vw, 1.1rem);
+	<!-- width: clamp(200px, 50%, 600px); -->
   }
 
   .card-back p {
-    font-size: 15px;
+    <!-- font-size: 15px; -->
     line-height: 1.2;
     /*font-family: 'Syne', sans-serif;*/    
     font-family: 'Indie Flower', cursive;
     color: var(--text);
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     margin: 0; 
-    letter-spacing: .2em;
+	letter-spacing: .2em;
+    font-size: 15px;
   }
 
   .mystic-icon {
@@ -462,6 +457,56 @@
     0% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 8px var(--c1)) brightness(1); }
     100% { transform: scale(1.15) translateY(-4px); filter: drop-shadow(0 0 18px var(--c3)) brightness(1.4); }
   }
+  
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    #cursor-orb, #cursor-ring {
+      display: none !important;
+    }
+    body, a, button, input {
+      cursor: auto;
+    }
+    #particle-canvas {
+      display: none !important;
+    }
+  }
+  @media (max-width: 767px) {
+    .footer {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .glass-card {
+      max-width: 800px;
+    }
+  }
+  @media(min-width:900px){
+	  .cards-container {
+		grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
+		}
+		.card-back {
+		font-size: clamp(1.3rem, 2.5vw, 2.1rem);
+		width: clamp(230px, 50%, 650px);
+	  }  
+	  .memory-card:hover {
+		height: 350px;
+	  }
+		#cta_btn_nosotros {
+		font-size: 1.6em;
+		letter-spacing: 0.7em;
+	  }
+	  .footer-company, .footer-phrase {
+		font-size: larger;
+		}
+  
+	}
 </style>
 </head>
 <body>
@@ -475,13 +520,13 @@
   </header>
   
   <aside class="glass-card">
-    <p>"Dicen que la materia no se crea ni se destruye, solo se transforma.</p>
-    <p>Nosotros somos la prueba:</p>
-    <p>transformamos los años en anécdotas, el barrio en leyenda y la distancia</p>
-    <p>en una excusa perfecta para volver a vernos.</p>
+    <p>Dicen que la materia no se crea ni se destruye, solo se transforma.</p>
+    <p>Nosotros somos la prueba</p>
+    <p>Transformamos los años en anécdotas, el barrio en leyenda y la distancia</p>
+    <p>en una excusa perfecta para volver a juntarnos</p>
     <p>De eso estamos hechos, y con eso vamos a conquistar el camino.</p>
     
-    <button id="cta-button">NOSOTROS</button>
+    <button id="cta_btn_nosotros">NOSOTROS</button>
   </aside>
 
   <main id="memories-section" class="cards-container">
@@ -491,14 +536,15 @@
 
 <footer class="footer">
   <div class="footer-company">Kikiriya DevOps</div>
-  <div class="footer-phrase">Hecho con 💚 en Montevideo, Uruguay</div>
+  <div class="footer-phrase">Hecho con 💚 en Capurro, Uruguay</div>
   <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
     <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1l90.3-62.3c4.5-3.1 10.2-3.7 15.2-1.6zM256 160A96 96 0 1 0 256 352a96 96 0 1 0 0-192z"/></svg>
     <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="display: none;"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
   </button>
 </footer>
 
-<a href="https://wa.me/59894872605" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Chat on WhatsApp" id="whatsapp-btn">
+<a href="https://wa.me/59894872605" target="_blank" rel="noopener noreferrer" 
+	class="whatsapp-btn" aria-label="Chat on WhatsApp" id="whatsapp-btn">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
     <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-2.9-5-1.5-7.7 1.3-10.5 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.6 5.6-9.3 1.9-3.7.9-7-1.4-9.8-2.3-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
   </svg>
@@ -670,7 +716,25 @@ class BurstParticle {
 // 4. Cursor tracking
 const orb = document.getElementById('cursor-orb');
 const ring = document.getElementById('cursor-ring');
-const btn = document.getElementById('cta-button');
+const btn_nosotros = document.getElementById('cta_btn_nosotros');
+
+function irGoogle(){
+  window.location.href = 'https://kikiriyadevops.netlify.app/';
+// }
+}
+  
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Este código solo corre cuando la página terminó de cargar
+	//const btnVolverIndex1 = document.getElementById('btnVolverIndex1');
+    
+    if (btn_nosotros) {
+        btn_nosotros.addEventListener('click', () => irGoogle());
+    } else {
+        console.log("No se encontró ningún botón con el ID 'btn_nosotros'");
+    }
+	
+});
 
 let mx = -100, my = -100;
 let rx = -100, ry = -100;
@@ -684,7 +748,7 @@ function updateCursor(x, y, target) {
   my = y;
   orb.style.transform = `translate3d(calc(${mx}px - 50%), calc(${my}px - 50%), 0)`;
   
-  const isBtnHover = target === btn || btn.contains(target);
+  const isBtnHover = target === btn_nosotros || btn_nosotros.contains(target);
   const isThemeHover = target.closest('#theme-toggle');
   const isWaHover = target.closest('.whatsapp-btn');
   const isCardHover = target.closest('.memory-card');
@@ -692,7 +756,7 @@ function updateCursor(x, y, target) {
   if (isBtnHover || isThemeHover || isWaHover || isCardHover) {
     if (!isHover) {
       isHover = true;
-      btnRect = isBtnHover ? btn.getBoundingClientRect() : (isThemeHover ? target.closest('#theme-toggle').getBoundingClientRect() : (isWaHover ? target.closest('.whatsapp-btn').getBoundingClientRect() : target.closest('.memory-card').getBoundingClientRect()));
+      btnRect = isBtnHover ? btn_nosotros.getBoundingClientRect() : (isThemeHover ? target.closest('#theme-toggle').getBoundingClientRect() : (isWaHover ? target.closest('.whatsapp-btn').getBoundingClientRect() : target.closest('.memory-card').getBoundingClientRect()));
       orb.style.width = '22px';
       orb.style.height = '22px';
       ring.style.opacity = '0.9';
@@ -786,15 +850,15 @@ function applyTheme(theme) {
   if (theme === 'dark') {
     iconSun.style.display = 'block';
     iconMoon.style.display = 'none';
-    whatsappBtn.style.backgroundColor='#1b6938';
-    whatsappBtnSvg.style.fill= 'yellowgreen';
+    whatsappBtn.style.backgroundColor='var(--cverdeClaro)';
+    whatsappBtnSvg.style.fill='var(--cgrisOscuro)'; 
   } else {
     iconSun.style.display = 'none';
     iconMoon.style.display = 'block';
     iconSun.style.fill = 'yellow';
     iconMoon.style.fill = 'blue';
-    whatsappBtnSvg.style.fill= '#30289e';
-    whatsappBtn.style.backgroundColor='var(--c9)';
+    whatsappBtnSvg.style.fill='var(--cgrisOscuro)';
+    whatsappBtn.style.backgroundColor='var(--cverdeClaro)';
   }
 }
 
@@ -821,7 +885,6 @@ const cardObserver = new IntersectionObserver((entries) => {
 const memoriesData = [
   { icon: '🌿', text: 'Estamos hechos de barro, asfalto y sueños de Capurro; esa mezcla es indestructible si estamos juntos.' },
   { icon: '✦', text: 'Cada kilómetro recorrido será un tributo a los que somos, a los que fuimos y a los que siempre seremos.' },
-  { icon: '✧', text: 'Somos una constelación de amigos que solo brilla con toda su intensidad cuando se junta en un mismo cielo.' },
   { icon: '☾', text: 'Capturaremos sombras del pasado para iluminarlas con las carcajadas del presente.' },
   { icon: '🚲', text: 'Porque somos del barrio, somos del mundo y, sobre todo, somos los unos de los otros. ¡Vámonos!' },
   { icon: '☯', text: 'Doblemos la luz de este viaje para que nos ilumine el resto del camino que nos queda por andar.' },
@@ -835,7 +898,7 @@ const memoriesData = [
   { icon: '🥂', text: 'Donde estemos nosotros, siempre será el centro del universo. ¡A disfrutar!' },  
   { icon: '✵', text: 'Nuestra historia está escrita en las calles de Capurro, pero el siguiente capítulo lo escribiremos frente al mar y bajo las estrellas.' },
   { icon: '✷', text: 'Porque estamos grandes y el \'después\' es un espejismo: el momento de celebrar nuestra existencia es hoy.' },
-  { icon: '✥', text: 'Somos del Barrio Capurro y de eso estamos hechos' }
+  { icon: '✧', text: 'Somos una constelación de amigos que solo brilla con toda su intensidad cuando se junta en un mismo cielo.' },
 ];
 
 function renderMemories() {

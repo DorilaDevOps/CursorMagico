@@ -36,19 +36,11 @@
   <meta name="format-detection" content="telephone=no">
   
   <!-- Canonical -->
-	<link rel="canonical" href="https://kikiriyadevops.netlify.app/" />
-  
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Indie+Flower&display=swap" rel="stylesheet">
-<script>
-  (function() {
-    var savedTheme = localStorage.getItem('theme');
-    if (savedTheme) { document.documentElement.setAttribute('data-theme', savedTheme); }
-    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.setAttribute('data-theme', 'dark'); }
-    else { document.documentElement.setAttribute('data-theme', 'light'); }
-  })();
-</script>
+	<link rel="canonical" href="https://kikiriyadevops.netlify.app/">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://gstatic.com" crossorigin>
+	<link href="https://googleapis.com" rel="stylesheet">
+
 <style>
   :root {
     --c1: #BF5FFF;
@@ -147,7 +139,6 @@
     min-height: 100vh;
     padding: 1rem 2rem 3rem;
     gap: 2rem;
-	margin-top: 2rem;
   }
 
   .hero {
@@ -156,10 +147,11 @@
     align-items: center;
     text-align: center;
     gap: 1rem;
+	padding-top: 2rem;
   }
 
   h1 {
-    font-size: clamp(32px, 8vw, 48px);
+    font-size: clamp(2em, 8vw, 3em);
 <!--Lo lógico en Clamp suele ser: clamp(mas chico, 8%ancho viewport, valor mas grande). si es al reves provoca que el navegador fuerce el valor máximo. --> 
 
    font-weight: bold;
@@ -183,7 +175,7 @@
   #cta_btn_nosotros {
     margin-top: 3rem;
     padding: 0 1.5em;
-    min-height: 48px;
+    min-height: 3rem;
     border: 1.5px solid var(--c1);
     border-radius: 9999px;
     background: transparent;
@@ -223,7 +215,7 @@
 
   .glass-card p {
     color: var(--glass-text);    
-    font-size: clamp(.9em, 4vw, 1.2em);
+    font-size: clamp(.9em, 4vw, 1.5em);
     line-height: 1.5;
     font-family:'Syne', sans-serif;  
   }
@@ -519,9 +511,13 @@
 	  }
 	  .footer-company, .footer-phrase {
 		font-size: larger;
-		}
-  
+		}  
 	}
+	
+    @media (orientation: landscape) and (min-width: 960px) {
+      .glass-card p { font-size: 1.2em; }
+      .glass-card { max-width: 100%;}
+    }
 </style>
 </head>
 <body>
@@ -531,16 +527,17 @@
 <div class="content-wrapper">
   <header class="hero">
     <h1>Siente la magia</h1>
-    <h2>Es hora de cambiar el paisaje pero mantener la risa.</h2>
+    <h2>Cambiemos de paisaje, mantengamos la risa de siempre.</h2>
   </header>
   
   <aside class="glass-card">
     <p>Dicen que la materia no se crea ni se destruye, solo se transforma.</p>
-    <p>Nosotros somos la prueba</p>
-    <p>Transformamos los años en anécdotas, el barrio en leyenda y la distancia</p>
-    <p>en una excusa perfecta para volver a juntarnos</p>
+    <p>Nosotros somos la prueba de esa ley.</p>
+    <p>Transformemos los años en anécdotas, el barrio en leyenda y la distancia 
+	en la excusa perfecta para volver a juntarnos.</p>
     <p>De eso estamos hechos, y con eso vamos a conquistar el camino.</p>
-    
+    <p>Es hora de ponernos <strong>alasRisas</strong>.</p>
+  
     <button id="cta_btn_nosotros">NOSOTROS</button>
   </aside>
 
@@ -734,7 +731,7 @@ const ring = document.getElementById('cursor-ring');
 const btn_nosotros = document.getElementById('cta_btn_nosotros');
 
 function irGoogle(){
-  window.location.href = 'https://kikiriyadevops.netlify.app/';
+  window.location.href = 'https://alasrisas.netlify.app/';
 // }
 }
   
@@ -942,7 +939,14 @@ function init() {
   if (!isReduced) requestAnimationFrame(anim);
   document.querySelectorAll('.memory-card').forEach(card => cardObserver.observe(card));
 }
-
+  (function() {
+    var savedTheme = localStorage.getItem('theme');
+    if (savedTheme) { document.documentElement.setAttribute('data-theme', savedTheme); }
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { 
+		document.documentElement.setAttribute('data-theme', 'dark'); }
+    else { document.documentElement.setAttribute('data-theme', 'light'); }
+  })();
+  
 init();
 </script>
 </body>

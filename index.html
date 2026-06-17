@@ -741,18 +741,15 @@ const orb = document.getElementById('cursor-orb');
 const ring = document.getElementById('cursor-ring');
 const btn_nosotros = document.getElementById('cta_btn_nosotros');
 
-function irGoogle(){
+function ir_alasrisasApp(){
   window.location.href = 'https://alasrisas.netlify.app/';
 // }
 }
   
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Este código solo corre cuando la página terminó de cargar
-	//const btnVolverIndex1 = document.getElementById('btnVolverIndex1');
-    
+document.addEventListener('DOMContentLoaded', () => {    
     if (btn_nosotros) {
-        btn_nosotros.addEventListener('click', () => irGoogle());
+        btn_nosotros.addEventListener('click', () => ir_alasrisasApp());
     } else {
         console.log("No se encontró ningún botón con el ID 'btn_nosotros'");
     }
